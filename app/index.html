@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CatalogFlow AI — Catalog Automation Studio</title>
+<style>
+:root{--bg:#f5f8ff;--panel:#fff;--ink:#14213d;--muted:#6b7a94;--line:#dfe7f3;--blue:#4169e1;--violet:#7c3aed;--green:#0f9f6e;--red:#cf3f5c;--shadow:0 14px 36px rgba(40,70,130,.09)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(180deg,#f7faff,#eef4ff);color:var(--ink)}
+.wrap{max-width:1260px;margin:auto;padding:34px 22px 60px}header{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;margin-bottom:22px}h1{margin:0 0 7px;font-size:34px;letter-spacing:-.035em}.sub{color:var(--muted);font-size:14px}.badge{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:999px;font-size:12px;color:var(--muted)}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:7px}
+.grid{display:grid;gap:14px}.setup{grid-template-columns:1.2fr .8fr}.card{background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:20px}.card h2{margin:0 0 12px;font-size:17px}.drop{border:1.5px dashed #aac3ef;border-radius:14px;padding:24px;background:#f8fbff}.drop input{width:100%}.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.mode{border:1px solid var(--line);background:#fff;border-radius:11px;padding:12px;cursor:pointer}.mode.active{border-color:var(--blue);background:#f1f5ff}.mode b{display:block}.mode small{color:var(--muted)}
+button{border:0;border-radius:11px;padding:12px 16px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(90deg,var(--blue),var(--violet));color:white;width:100%;margin-top:14px}.primary:disabled{opacity:.45;cursor:not-allowed}.error{display:none;margin-top:10px;padding:10px;border-radius:10px;background:#fff0f3;color:var(--red);font-size:12px}
+.progress{margin-top:10px;height:10px;border-radius:999px;background:#e7edf7;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,#4299f5,#6d5cf5,#9a48e8);transition:.25s}.progressText{display:flex;justify-content:space-between;margin-top:9px;font-size:12px;color:var(--muted)}
+.metrics{grid-template-columns:repeat(5,1fr);margin-top:14px}.metric b{display:block;font-size:24px}.metric span{font-size:11px;color:var(--muted)}
+.resultgrid{grid-template-columns:1fr 1fr 1fr;margin-top:14px}.list{display:grid;gap:7px}.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #edf1f7;font-size:12px}.row:last-child{border-bottom:0}.ok{color:var(--green);font-weight:800}.downloads a{display:block;text-decoration:none;color:var(--blue);border:1px solid var(--line);border-radius:10px;padding:11px;margin-bottom:8px;background:#f8fbff;font-weight:700;font-size:12px}
+.preview{margin-top:14px}.toolbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}.tabs{display:flex;gap:5px}.tab{background:#eef2f8;color:#5e6b82;padding:8px 11px}.tab.active{background:var(--blue);color:#fff}.search{border:1px solid var(--line);border-radius:9px;padding:9px 11px;min-width:260px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px;max-height:420px}table{border-collapse:collapse;width:100%;min-width:1000px;font-size:11px}th{position:sticky;top:0;background:#f3f6fb;text-align:left;padding:9px;border-bottom:1px solid var(--line)}td{padding:9px;border-bottom:1px solid #edf1f7;white-space:nowrap;max-width:230px;overflow:hidden;text-overflow:ellipsis}
+.note{font-size:12px;color:var(--muted);line-height:1.55}.empty{color:var(--muted);font-size:12px;padding:14px 0}
+@media(max-width:900px){.setup,.resultgrid,.metrics{grid-template-columns:1fr}.modes{grid-template-columns:1fr}.toolbar,header{flex-direction:column;align-items:stretch}.search{min-width:0;width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div><h1>CatalogFlow AI</h1><div class="sub">Local catalog cleaning, business rules, optional AI enrichment, QA and export.</div></div>
+  <div class="badge" id="health"><span class="dot"></span>Checking local backend…</div>
+</header>
+
+<section class="grid setup">
+  <div class="card">
+    <h2>1. Load catalog data</h2>
+    <div class="drop">
+      <input id="file" type="file" accept=".csv,.tsv,.xlsx,.xls">
+      <div class="note" id="fileNote">Choose CSV, TSV, XLSX or XLS. Public demo: <b>sample_data/sample_catalog.csv</b>.</div>
+    </div>
+    <div class="modes">
+      <button class="mode active" data-provider="template"><b>Template</b><small>No API key</small></button>
+      <button class="mode" data-provider="openai"><b>OpenAI</b><small>Optional provider</small></button>
+      <button class="mode" data-provider="claude"><b>Anthropic</b><small>Optional provider</small></button>
+    </div>
+    <button class="primary" id="run" disabled>Run automation</button>
+    <div class="error" id="error"></div>
+  </div>
+
+  <div class="card">
+    <h2>2. Live pipeline</h2>
+    <div class="note" id="stage">Select a file to begin.</div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="progressText"><span id="status">Idle</span><b id="pct">0%</b></div>
+    <p class="note">The prototype runs locally. Template mode is deterministic; provider modes use keys stored only in your local <code>.env</code>.</p>
+  </div>
+</section>
+
+<section class="grid metrics">
+  <div class="card metric"><b id="rows">0</b><span>Rows processed</span></div>
+  <div class="card metric"><b id="changes">0</b><span>Fields standardized</span></div>
+  <div class="card metric"><b id="enriched">0</b><span>Rows enriched</span></div>
+  <div class="card metric"><b id="quality">—</b><span>Quality score</span></div>
+  <div class="card metric"><b id="mode">Template</b><span>Enrichment mode</span></div>
+</section>
+
+<section class="grid resultgrid">
+  <div class="card"><h2>Field mapping</h2><div class="list" id="mapping"><div class="empty">Run a dataset to detect fields.</div></div></div>
+  <div class="card"><h2>Category summary</h2><div class="list" id="pivot"><div class="empty">No summary yet.</div></div></div>
+  <div class="card"><h2>Exports</h2><div class="downloads" id="downloads"><div class="empty">Exports appear after processing.</div></div></div>
+</section>
+
+<section class="card preview">
+  <div class="toolbar">
+    <div><h2 style="margin:0">Before / after preview</h2><div class="note">Review the transformation before using exported data.</div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><div class="tabs"><button class="tab active" id="beforeBtn">Before</button><button class="tab" id="afterBtn">After</button></div><input class="search" id="search" placeholder="Search preview…"></div>
+  </div>
+  <div id="table"><div class="empty">No data processed yet.</div></div>
+</section>
+</div>
+
+<script>
+var selected=null, provider='template', jobId=null, result=null, view='before';
+
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m];});}
+function showError(msg){var e=document.getElementById('error');e.textContent=msg;e.style.display='block';}
+function clearError(){document.getElementById('error').style.display='none';}
+function setProgress(stage,pct){document.getElementById('stage').textContent=stage||'';document.getElementById('status').textContent=stage||'Working';document.getElementById('pct').textContent=String(pct||0)+'%';document.getElementById('bar').style.width=String(pct||0)+'%';}
+
+fetch('/api/health',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+  document.getElementById('health').innerHTML='<span class="dot"></span>Backend active · v'+esc(d.version||'4');
+}).catch(function(){document.getElementById('health').textContent='Backend offline — use START CATALOGFLOW.bat';});
+
+document.querySelectorAll('.mode').forEach(function(el){
+  el.addEventListener('click',function(){
+    document.querySelectorAll('.mode').forEach(function(x){x.classList.remove('active');});
+    el.classList.add('active'); provider=el.getAttribute('data-provider');
+    document.getElementById('mode').textContent=provider==='template'?'Template':provider==='openai'?'OpenAI':'Anthropic';
+  });
+});
+
+document.getElementById('file').addEventListener('change',function(e){
+  selected=e.target.files[0]||null;
+  document.getElementById('run').disabled=!selected;
+  document.getElementById('fileNote').textContent=selected ? selected.name+' · '+(selected.size/1024/1024).toFixed(2)+' MB' : 'Choose CSV, TSV, XLSX or XLS.';
+});
+
+document.getElementById('run').addEventListener('click',startRun);
+document.getElementById('beforeBtn').addEventListener('click',function(){view='before';toggleTabs();renderTable();});
+document.getElementById('afterBtn').addEventListener('click',function(){view='after';toggleTabs();renderTable();});
+document.getElementById('search').addEventListener('input',renderTable);
+
+function startRun(){
+  if(!selected)return;
+  clearError(); result=null; document.getElementById('run').disabled=true; setProgress('Uploading',2);
+  fetch('/api/upload',{method:'POST',headers:{'X-Filename':selected.name,'X-Provider':provider,'Content-Type':'application/octet-stream'},body:selected})
+    .then(function(r){return r.json().then(function(d){return {ok:r.ok,data:d};});})
+    .then(function(x){if(!x.ok||!x.data.ok)throw new Error(x.data.error||'Upload failed');jobId=x.data.job_id;poll();})
+    .catch(function(e){showError(e.message||String(e));document.getElementById('run').disabled=false;});
+}
+
+function poll(){
+  fetch('/api/status?id='+encodeURIComponent(jobId),{cache:'no-store'})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(!d.ok)throw new Error(d.error||'Status failed');
+      var j=d.job||{}; setProgress(j.message||j.stage||'Working',j.progress||0);
+      if(j.status==='error')throw new Error(j.error||j.message||'Automation failed');
+      if(j.status==='complete'){loadResult();return;}
+      setTimeout(poll,450);
+    }).catch(function(e){showError(e.message||String(e));document.getElementById('run').disabled=false;});
+}
+
+function loadResult(){
+  fetch('/api/result?id='+encodeURIComponent(jobId),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+    if(!d.ok)throw new Error(d.error||'Could not load result');
+    result=d.result; setProgress('Complete',100); document.getElementById('run').disabled=false;
+    document.getElementById('rows').textContent=Number(result.rows||0).toLocaleString();
+    document.getElementById('changes').textContent=Number(result.changes||0).toLocaleString();
+    document.getElementById('enriched').textContent=Number(result.ai_rows||0).toLocaleString();
+    document.getElementById('quality').textContent=result.quality_after ? String(result.quality_after.quality_score)+'%' : '—';
+    renderMapping();renderPivot();renderDownloads();view='after';toggleTabs();renderTable();
+  }).catch(function(e){showError(e.message||String(e));document.getElementById('run').disabled=false;});
+}
+
+function renderMapping(){
+  var labels={sku:'SKU',name:'Product title',brand:'Brand',category:'Category',price:'Price',cost:'Cost',stock:'Stock',description:'Description',url:'URL'};
+  var h='';
+  Object.keys(labels).forEach(function(k){var v=result.mapping[k]||'Not detected';h+='<div class="row"><span>'+esc(labels[k])+'</span><span class="'+(result.mapping[k]?'ok':'')+'">'+esc(v)+'</span></div>';});
+  document.getElementById('mapping').innerHTML=h;
+}
+
+function renderPivot(){
+  var rows=(result.pivot||[]).slice(0,8); if(!rows.length){document.getElementById('pivot').innerHTML='<div class="empty">No category field detected.</div>';return;}
+  document.getElementById('pivot').innerHTML=rows.map(function(x){return '<div class="row"><span>'+esc(x.category)+'</span><span>'+Number(x.products).toLocaleString()+' products · '+esc(x.pct)+'%</span></div>';}).join('');
+}
+
+function renderDownloads(){
+  var h='<a href="/download/'+encodeURIComponent(result.csv_file)+'">Download cleaned CSV</a>';
+  if(result.xlsx_file)h+='<a href="/download/'+encodeURIComponent(result.xlsx_file)+'">Download Excel workbook</a>';
+  document.getElementById('downloads').innerHTML=h;
+}
+
+function toggleTabs(){
+  document.getElementById('beforeBtn').classList.toggle('active',view==='before');
+  document.getElementById('afterBtn').classList.toggle('active',view==='after');
+}
+
+function renderTable(){
+  if(!result){return;}
+  var rows=view==='before'?(result.before_preview||[]):(result.after_preview||[]);
+  var q=document.getElementById('search').value.trim().toLowerCase();
+  if(q)rows=rows.filter(function(r){return Object.keys(r).some(function(k){return String(r[k]).toLowerCase().indexOf(q)>=0;});});
+  if(!rows.length){document.getElementById('table').innerHTML='<div class="empty">No matching rows.</div>';return;}
+  var headers=[]; rows.forEach(function(r){Object.keys(r).forEach(function(k){if(headers.indexOf(k)<0)headers.push(k);});}); headers=headers.slice(0,12);
+  var h='<div class="tablewrap"><table><thead><tr>'+headers.map(function(x){return '<th>'+esc(x)+'</th>';}).join('')+'</tr></thead><tbody>';
+  h+=rows.slice(0,20).map(function(r){return '<tr>'+headers.map(function(c){return '<td title="'+esc(r[c])+'">'+esc(r[c])+'</td>';}).join('')+'</tr>';}).join('');
+  h+='</tbody></table></div>'; document.getElementById('table').innerHTML=h;
+}
+</script>
+</body>
+</html>
