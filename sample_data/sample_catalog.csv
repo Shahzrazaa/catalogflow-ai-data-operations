@@ -1,0 +1,6 @@
+SKU,Product Name,Brand,Category,Price,Cost,Stock,Description,URL
+DEMO-001,wireless mouse,Nova Gear,Electronics > Accessories,$24.99,$12.50,42,Compact wireless mouse,https://example.com/products/demo-001
+DEMO-002,mechanical keyboard,Nova Gear,Electronics/Accessories,$74.00,$41.00,7,Mechanical keyboard with tactile switches,https://example.com/products/demo-002
+DEMO-003,desk lamp,Luma Home,Home > Office,$38.50,$21.25,0,Adjustable LED desk lamp,https://example.com/products/demo-003
+DEMO-004,water bottle,Terra,Outdoors > Hydration,$18.00,$8.00,19,Insulated stainless steel bottle,https://example.com/products/demo-004
+DEMO-005,notebook set,Paper & Co,Office > Stationery,$15.75,$6.50,5,Three-pack of ruled notebooks,https://example.com/products/demo-005
