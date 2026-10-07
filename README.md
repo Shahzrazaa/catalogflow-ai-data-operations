@@ -1,5 +1,9 @@
 # CatalogFlow AI — Catalog Data Operations Prototype
 
+[![smoke-tests](https://github.com/Shahzrazaa/catalogflow-ai-data-operations/actions/workflows/test.yml/badge.svg)](https://github.com/Shahzrazaa/catalogflow-ai-data-operations/actions/workflows/test.yml)
+
+**Working local prototype · Python · CSV/Excel data operations · optional LLM enrichment · human review**
+
 A local-first Python workflow for cleaning, standardizing, enriching, reviewing, and exporting product-catalog data.
 
 This repository packages a working prototype I built as part of my applied AI / data-operations portfolio. The goal is practical: turn inconsistent vendor files into cleaner, more usable catalog outputs without requiring a heavy data platform.
