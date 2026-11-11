@@ -1,12 +1,23 @@
 # CatalogFlow AI — Catalog Data Operations Prototype
 
 [![smoke-tests](https://github.com/Shahzrazaa/catalogflow-ai-data-operations/actions/workflows/test.yml/badge.svg)](https://github.com/Shahzrazaa/catalogflow-ai-data-operations/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 **Working local prototype · Python · CSV/Excel data operations · optional LLM enrichment · human review**
 
 A local-first Python workflow for cleaning, standardizing, enriching, reviewing, and exporting product-catalog data.
 
 This repository packages a working prototype I built as part of my applied AI / data-operations portfolio. The goal is practical: turn inconsistent vendor files into cleaner, more usable catalog outputs without requiring a heavy data platform.
+
+## Screenshots
+
+Run on `sample_data/messy_demo_catalog.csv` (41 fictional rows with mixed price formats, inconsistent categories, blank stock values and one duplicate row), template mode, no API key:
+
+![CatalogFlow dashboard after a run](docs/screenshots/dashboard.png)
+
+| Before (raw vendor file) | After (cleaned + calculated fields) |
+|---|---|
+| ![Before](docs/screenshots/before.png) | ![After](docs/screenshots/after.png) |
 
 ## What it does
 
@@ -43,13 +54,23 @@ flowchart LR
     J --> K[CSV / Excel export]
 ```
 
+## Quick start on macOS / Linux
+
+```bash
+git clone https://github.com/Shahzrazaa/catalogflow-ai-data-operations.git
+cd catalogflow-ai-data-operations
+sh start.sh
+```
+
+`start.sh` checks for Python 3.9+, installs `pandas` and `openpyxl` if needed, starts the local server and opens the browser. Press Ctrl+C to stop.
+
 ## Quick start on Windows
 
 1. Install Python 3.
 2. Clone or download this repository.
 3. Double-click **`START CATALOGFLOW.bat`**.
 4. The app opens on localhost.
-5. Upload `sample_data/sample_catalog.csv` to try it without any API key.
+5. Upload `sample_data/sample_catalog.csv` (or the messier `sample_data/messy_demo_catalog.csv`) to try it without any API key.
 
 You can also install dependencies manually:
 
@@ -90,9 +111,11 @@ This is a prototype heuristic, not an industry-standard DQ score.
 ```text
 .
 ├── app/index.html              # Browser UI
+├── docs/screenshots/           # README screenshots (fictional demo data)
 ├── sample_data/                # Safe fictional demo data
 ├── tests/                      # Core normalization / mapping tests
 ├── server.pyw                  # Local Python backend
+├── start.sh                    # macOS / Linux launcher
 ├── START CATALOGFLOW.bat       # One-click Windows launcher
 ├── requirements.txt
 ├── .env.example
@@ -121,4 +144,5 @@ This project demonstrates practical work across:
 ---
 
 **Author:** Shahzad Raza — IBA Karachi  
-**Status:** Working local prototype / portfolio project
+**Status:** Working local prototype / portfolio project  
+**License:** [MIT](LICENSE)

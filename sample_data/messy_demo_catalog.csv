@@ -1,0 +1,42 @@
+SKU,Product Name,Brand,Category,Price,Cost,Stock,Description,URL
+DEMO-001,Phone Stand  ,Nova Gear,Outdoors > Hydration,$34.55,$13.92,4,Fictional demo product 1,https://example.com/products/demo-001
+DEMO-002,Usb-C Hub  ,Brightline,Electronics > Accessories,$25.61,$9.73,,Fictional demo product 2,https://example.com/products/demo-002
+DEMO-003,Led Strip  ,Brightline,Electronics > Accessories,75.8,$29.81,40,Fictional demo product 3,https://example.com/products/demo-003
+DEMO-004,Desk Lamp  ,Nova Gear,Outdoors > Hydration,88.05,$32.25,12 ,Fictional demo product 4,https://example.com/products/demo-004
+DEMO-005,phone stand,Oakfield,Kitchen > Storage,33.3,$21.17,,,https://example.com/products/demo-005
+DEMO-006,  PHONE STAND,Oakfield,home  >  office,13.15,$4.88,12 ,Fictional demo product 6,https://example.com/products/demo-006
+DEMO-007,Usb-C Hub  ,Terra,Outdoors > Hydration,37.65,$16.45,,Fictional demo product 7,https://example.com/products/demo-007
+DEMO-008,Usb-C Hub  ,Brightline,electronics/accessories,$48.6,$22.85,18,Fictional demo product 8,https://example.com/products/demo-008
+DEMO-009,Usb-C Hub  ,Oakfield,kitchen/storage,$70.09,$28.26,26,Fictional demo product 9,https://example.com/products/demo-009
+DEMO-010,  LED STRIP,Nova Gear,kitchen/storage,$ 79.79,$36.69,12 ,,https://example.com/products/demo-010
+DEMO-011,Led Strip  ,,home  >  office,$15.67,$6.96,none,Fictional demo product 11,https://example.com/products/demo-011
+DEMO-012,phone stand,Oakfield,Electronics > Accessories,$ 31.34,$15.2,12 ,Fictional demo product 12,https://example.com/products/demo-012
+DEMO-013,  LAPTOP SLEEVE,,home  >  office,$ 48.48,$20.67,,Fictional demo product 13,https://example.com/products/demo-013
+DEMO-014,Laptop Sleeve  ,Terra,Kitchen > Storage,$ 14.61,$7.41,,Fictional demo product 14,https://example.com/products/demo-014
+DEMO-015,usb-c hub,Luma Home,electronics/accessories,$42.05,$20.0,,,https://example.com/products/demo-015
+DEMO-016,wireless mouse,Brightline,Outdoors > Hydration,62.0,$21.96,none,Fictional demo product 16,https://example.com/products/demo-016
+DEMO-017,Cable Organizer  ,,Outdoors > Hydration,38.28,$20.99,44,Fictional demo product 17,https://example.com/products/demo-017
+DEMO-018,wireless mouse,Nova Gear,electronics/accessories,$40.18,$19.67,12 ,Fictional demo product 18,https://example.com/products/demo-018
+DEMO-019,led strip,Oakfield,Electronics > Accessories,$44.13,$17.14,6,Fictional demo product 19,https://example.com/products/demo-019
+DEMO-020,  LED STRIP,Luma Home,Kitchen > Storage,$85.81,$48.47,,,https://example.com/products/demo-020
+DEMO-021,  USB-C HUB,Brightline,home  >  office,$ 28.69,$13.53,30,Fictional demo product 21,https://example.com/products/demo-021
+DEMO-022,  LUNCH BOX,,Kitchen > Storage,$47.67,$18.12,none,Fictional demo product 22,https://example.com/products/demo-022
+DEMO-023,  TRAVEL MUG,Pixelpeak,kitchen/storage,$ 21.24,$7.61,9,Fictional demo product 23,https://example.com/products/demo-023
+DEMO-024,phone stand,Oakfield,Outdoors > Hydration,$ 15.46,$9.99,,Fictional demo product 24,https://example.com/products/demo-024
+DEMO-025,  WATER BOTTLE,Pixelpeak,kitchen/storage,71.88,$33.45,,,https://example.com/products/demo-025
+DEMO-026,  WIRELESS MOUSE,Brightline,Home > Office,$ 26.59,$14.12,46,Fictional demo product 26,https://example.com/products/demo-026
+DEMO-027,phone stand,Luma Home,Electronics > Accessories,$ 23.88,$13.42,none,Fictional demo product 27,https://example.com/products/demo-027
+DEMO-028,Cable Organizer  ,Terra,kitchen/storage,26.6,$11.14,30,Fictional demo product 28,https://example.com/products/demo-028
+DEMO-029,  WATER BOTTLE,Luma Home,home  >  office,$60.74,$39.0,12 ,Fictional demo product 29,https://example.com/products/demo-029
+DEMO-030,Usb-C Hub  ,Luma Home,electronics/accessories,$72.71,$33.91,12 ,,https://example.com/products/demo-030
+DEMO-031,Led Strip  ,Brightline,Kitchen > Storage,$89.44,$32.17,,Fictional demo product 31,https://example.com/products/demo-031
+DEMO-032,Usb-C Hub  ,Pixelpeak,electronics/accessories,84.87,$34.34,1,Fictional demo product 32,https://example.com/products/demo-032
+DEMO-033,  WATER BOTTLE,Oakfield,electronics/accessories,43.57,$28.54,none,Fictional demo product 33,https://example.com/products/demo-033
+DEMO-034,Wireless Mouse  ,Terra,home  >  office,$70.62,$32.77,,Fictional demo product 34,https://example.com/products/demo-034
+DEMO-035,travel mug,Oakfield,Outdoors > Hydration,$62.32,$39.59,,,https://example.com/products/demo-035
+DEMO-036,desk lamp,Luma Home,home  >  office,9.53,$4.8,38,Fictional demo product 36,https://example.com/products/demo-036
+DEMO-037,Usb-C Hub  ,Nova Gear,electronics/accessories,$58.77,$23.04,12 ,Fictional demo product 37,https://example.com/products/demo-037
+DEMO-038,travel mug,,Electronics > Accessories,$23.69,$8.64,12 ,Fictional demo product 38,https://example.com/products/demo-038
+DEMO-039,Cable Organizer  ,Oakfield,kitchen/storage,44.35,$25.03,none,Fictional demo product 39,https://example.com/products/demo-039
+DEMO-040,cable organizer,Brightline,Electronics > Accessories,$ 47.20,$32.07,,,https://example.com/products/demo-040
+DEMO-004,Desk Lamp  ,Nova Gear,Outdoors > Hydration,88.05,$32.25,12 ,Fictional demo product 4,https://example.com/products/demo-004
