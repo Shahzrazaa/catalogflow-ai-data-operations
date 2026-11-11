@@ -47,7 +47,7 @@ def norm(s):
     return re.sub(r'[^a-z0-9_]+','',re.sub(r'[\s\-/]+','_',str(s or '').strip().lower()))
 
 def missing(v):
-    return str(v or '').strip().lower() in {'','na','n/a','null','none','nan','missing','-','--'}
+    return str(v or '').strip().lower() in {'','na','n/a','n/a.','n.a','n.a.','null','none','nan','missing','-','--'}
 
 def num(v):
     if missing(v):
@@ -58,6 +58,13 @@ def num(v):
         return x if x==x else None
     except:
         return None
+
+def clean_numeric_value(v):
+    # Blank missing tokens (none, N/A, n.a., etc.) and normalize parseable numbers.
+    if missing(v):
+        return ''
+    n=num(v)
+    return str(round(n,2)) if n is not None else str(v or '').strip()
 
 def titlecase(s):
     return re.sub(r'\s+',' ',str(s or '').strip()).title()
@@ -272,13 +279,11 @@ def process(jid,path,name,provider):
                     changes+=1
             for k in ('price','cost','stock'):
                 h=m.get(k)
-                if h and not missing(r[h]):
-                    n=num(r[h])
-                    if n is not None:
-                        nv=str(round(n,2))
-                        if nv!=r[h]:
-                            r[h]=nv
-                            changes+=1
+                if h:
+                    nv=clean_numeric_value(r[h])
+                    if nv!=r[h]:
+                        r[h]=nv
+                        changes+=1
 
         setjob(jid,stage='Applying formulas',progress=45,message='Creating calculated catalog fields…')
         for r in rows:

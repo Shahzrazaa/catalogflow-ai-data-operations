@@ -13,6 +13,18 @@ class CatalogFlowCoreTests(unittest.TestCase):
     def test_number_normalization(self):
         self.assertEqual(server.num("$1,234.50"), 1234.5)
         self.assertIsNone(server.num("N/A"))
+        # Missing-token variants should be treated as blank, including case/spacing.
+        for token in ("none", "None", "NONE", " none ", "null", "NULL", "-", " - ", "n.a.", "n.a", "n/a."):
+            with self.subTest(token=token):
+                self.assertIsNone(server.num(token))
+                self.assertEqual(server.clean_numeric_value(token), "")
+
+    def test_numeric_cleaning_blanks_missing_stock(self):
+        self.assertEqual(server.clean_numeric_value("none"), "")
+        self.assertEqual(server.clean_numeric_value("  NONE  "), "")
+        self.assertEqual(server.clean_numeric_value("N/A"), "")
+        self.assertEqual(server.clean_numeric_value("12"), "12.0")
+        self.assertEqual(server.clean_numeric_value("$1,234.50"), "1234.5")
 
     def test_auto_mapping(self):
         headers = ["SKU", "Product Name", "Price", "Inventory Qty"]
